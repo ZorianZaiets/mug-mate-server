@@ -29,6 +29,11 @@ app.post('/api/encrypt', (req, res) => {
     res.json({signature});
 });
 
+app.get('/hello', (req, res) => {
+    res.send({ message: 'Hello from the server!' });
+})
+
 app.listen(port, () => {
     console.log(`Сервер запущен на http://localhost:${port}`);
 });
+
