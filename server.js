@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 const crypto = require('crypto');
 
 app.use(cors()); // Разрешение запросов с других доменов (для разработки)
