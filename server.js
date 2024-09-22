@@ -70,9 +70,9 @@ app.post('/send-message', (req, res) => {
 
 app.post('/payment_result', (req, res) => {
     const {data, signature} = req.body;
-    res.json({data});
+
     console.log(signature);
-    console.log(data);
+    console.log(data.json);
 });
 
 app.get('/', (req, res) => {
