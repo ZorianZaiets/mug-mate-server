@@ -66,8 +66,12 @@ app.post('/send-message', (req, res) => {
         }
     });
 
+});
 
+app.post('/result', (req, res) => {
+    const data = req.body;
 
+    console.log(data);
 });
 
 app.get('/', (req, res) => {
