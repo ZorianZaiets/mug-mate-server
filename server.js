@@ -72,7 +72,7 @@ app.post('/payment_result', (req, res) => {
     const {data, signature} = req.body;
 
     console.log(signature);
-    console.log(data.json);
+    console.log(data);
 });
 
 app.get('/', (req, res) => {
