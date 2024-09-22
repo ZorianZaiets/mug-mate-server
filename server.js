@@ -70,7 +70,7 @@ app.post('/send-message', (req, res) => {
 
 app.post('/result', (req, res) => {
     const data = req.body;
-
+    res.send('Hello, Result!');
     console.log(data);
 });
 
