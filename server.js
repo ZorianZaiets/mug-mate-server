@@ -69,8 +69,9 @@ app.post('/send-message', (req, res) => {
 });
 
 app.post('/payment_result', (req, res) => {
-    const data = req.body;
-    res.send(`${data.data}`);
+    const {data, signature} = req.body;
+    res.json({data});
+    console.log(signature);
     console.log(data);
 });
 
