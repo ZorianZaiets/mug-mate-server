@@ -68,38 +68,23 @@ app.post('/send-message', (req, res) => {
 
 });
 
-app.post('/api/checkout', async (req, res) => {
-    const  payment_result_data = req.body;
-    const sign_string = private_key + payment_result_data + private_key;
-    // Шифрование данных в Base64
-    //const encryptedData = Buffer.from(data).toString('base64');
-    const signature = crypto.createHash('sha1').update(sign_string).digest('base64');
 
-    try {
-        const liqpayResponse = await fetch('https://www.liqpay.ua/api/request', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                data: payment_result_data,
-                signature: signature,
-            }),
-        });
+app.post('/api/payment-result', async (req, res) => {
+    const paymentData = req.body;
 
-        const result = await liqpayResponse.json();
-        res.json(result); // Отправляем ответ клиенту
-    } catch (error) {
-        console.error('Ошибка при запросе на LiqPay:', error);
-        res.status(500).json({ error: 'Ошибка при запросе на LiqPay' });
+    console.log('Полученные данные от LiqPay:', paymentData);
+
+    // Проверяем статус платежа
+    if (paymentData.status === 'success') {
+        // Здесь ты можешь обработать успешный платеж
+        // Например, обновить статус заказа в базе данных
+        console.log('Оплата успешна');
+    } else {
+        console.log('Статус оплаты:', paymentData.status);
     }
-});
 
-app.post('/payment_result', (req, res) => {
-    const {data, signature} = req.body;
-
-    console.log(signature);
-    console.log(data);
+    // Отправляем ответ LiqPay, чтобы подтвердить получение уведомления
+    res.status(200).send('OK');
 });
 
 app.get('/', (req, res) => {
