@@ -70,17 +70,17 @@ app.post('/send-message', (req, res) => {
 
 
 app.post('/api/payment-result', async (req, res) => {
-    const paymentData = req.body;
+    const {data , signature} = req.body;
 
-    console.log('Полученные данные от LiqPay:', paymentData);
+    console.log('Полученные данные от LiqPay:', data);
 
     // Проверяем статус платежа
-    if (paymentData.status === 'success') {
+    if (data.status === 'success') {
         // Здесь ты можешь обработать успешный платеж
         // Например, обновить статус заказа в базе данных
         console.log('Оплата успешна');
     } else {
-        console.log('Статус оплаты:', paymentData.status);
+        console.log('Статус оплаты:', data.status);
     }
 
     // Отправляем ответ LiqPay, чтобы подтвердить получение уведомления
