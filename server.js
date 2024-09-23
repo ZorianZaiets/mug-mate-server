@@ -70,6 +70,7 @@ app.post('/send-message', (req, res) => {
 
 });
 
+let paymentStatus = 'pending'; // Начальный статус
 
 app.post('/api/payment-result', (req, res) => {
     const {data , signature} = req.body;
@@ -83,13 +84,20 @@ app.post('/api/payment-result', (req, res) => {
     if (decodedData.status === 'success') {
         // Здесь ты можешь обработать успешный платеж
         // Например, обновить статус заказа в базе данных
+        paymentStatus = 'success'; // Обновляем статус
         console.log('Оплата успешна');
     } else {
+        paymentStatus = 'failed'; // Обновляем статус
         console.log('Статус оплаты:', decodedData.status);
     }
 
     // Отправляем ответ LiqPay, чтобы подтвердить получение уведомления
     res.status(200).send('OK');
+});
+
+// Эндпоинт для получения статуса
+app.get('/api/payment-status', (req, res) => {
+    res.json({ status: paymentStatus });
 });
 
 app.get('/', (req, res) => {
