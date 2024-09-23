@@ -86,6 +86,8 @@ app.post('/api/checkout', async (req, res) => {
                 signature: signature,
             }),
         });
+        const textResponse = await liqpayResponse.text(); // Получаем ответ как текст
+        console.log('Ответ от LiqPay:', textResponse); // Логируем текст ответа
 
         const result = await liqpayResponse.json();
         res.json(result); // Отправляем ответ клиенту
