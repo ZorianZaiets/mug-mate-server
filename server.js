@@ -12,10 +12,11 @@ app.use(express.json()); // Для работы с JSON
 app.use(express.urlencoded({ extended: true }));
 
 const private_key = "sandbox_SksoMN0YVr98god4OEGjSe3Cl71EENvVTgI60XCE";
-
+let paymentStatus = 'pending'; // Начальный статус
 
 // Маршрут для получения данных, шифрования и отправки назад
 app.post('/api/encrypt', (req, res) => {
+    paymentStatus = "pending";
     const {data2} = req.body;
     console.log(data2);
 
@@ -70,7 +71,7 @@ app.post('/send-message', (req, res) => {
 
 });
 
-let paymentStatus = 'pending'; // Начальный статус
+
 
 app.post('/api/payment-result', (req, res) => {
     const {data , signature} = req.body;
