@@ -9,6 +9,8 @@ app.use(cors()); // Разрешение запросов с других дом
 
 app.use(express.json()); // Для работы с JSON
 
+app.use(express.urlencoded({ extended: true }));
+
 const private_key = "sandbox_SksoMN0YVr98god4OEGjSe3Cl71EENvVTgI60XCE";
 
 
@@ -69,7 +71,7 @@ app.post('/send-message', (req, res) => {
 });
 
 
-app.post('/api/payment-result', async (req, res) => {
+app.post('/api/payment-result', (req, res) => {
     const {data , signature} = req.body;
     console.log('Все данные запроса:', req.body);
     console.log('Заголовки запроса:', req.headers);
