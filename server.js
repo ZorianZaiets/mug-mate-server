@@ -72,7 +72,7 @@ app.post('/send-message', (req, res) => {
 app.post('/api/payment-result', async (req, res) => {
     const {data , signature} = req.body;
 
-    console.log('Полученные данные от LiqPay:', data);
+    console.log('Полученные данные от LiqPay:',  req.body);
 
     // Проверяем статус платежа
     if (data.status === 'success') {
