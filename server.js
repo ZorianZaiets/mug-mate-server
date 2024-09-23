@@ -73,9 +73,10 @@ app.post('/send-message', (req, res) => {
 
 app.post('/api/payment-result', (req, res) => {
     const {data , signature} = req.body;
-    console.log('Все данные запроса:', req.body);
-    console.log('Заголовки запроса:', req.headers);
-    console.log('Полученные данные от LiqPay:',  req.body);
+
+    console.log('Полученные данные от LiqPay:',  data);
+    const decodedData = Buffer.from(data, 'base64').toString('utf-8');
+    console.log('Раскодированные данные от LiqPay:',  decodedData);
 
     // Проверяем статус платежа
     if (data.status === 'success') {
