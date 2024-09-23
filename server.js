@@ -76,7 +76,7 @@ app.post('/api/checkout', async (req, res) => {
     const signature = crypto.createHash('sha1').update(sign_string).digest('base64');
 
     try {
-        const liqpayResponse = await fetch('https://www.liqpay.ua/api/3/checkout', {
+        const liqpayResponse = await fetch('https://www.liqpay.ua/api/request', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
