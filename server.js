@@ -9,7 +9,7 @@ app.use(cors()); // Разрешение запросов с других дом
 
 app.use(express.json()); // Для работы с JSON
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 
 const private_key = "sandbox_SksoMN0YVr98god4OEGjSe3Cl71EENvVTgI60XCE";
 let paymentStatus = 'pending'; // Начальный статус
@@ -43,10 +43,10 @@ const transporter = nodemailer.createTransport({
 });
 
 app.post('/send-message', (req, res) => {
-    const { name, email, message } = req.body;
+    const {name, email, message} = req.body;
 
     if (!name || !email || !message) {
-        return res.status(400).json({ error: 'All fields are required' });
+        return res.status(400).json({error: 'All fields are required'});
     }
 
     const mailOptions = {
@@ -62,10 +62,10 @@ app.post('/send-message', (req, res) => {
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Failed to send email' });
+            return res.status(500).json({error: 'Failed to send email'});
         } else {
             console.log('Email sent: ' + info.response);
-            res.status(200).json({ message: 'Server: Message sent successfully!' });
+            res.status(200).json({message: 'Server: Message sent successfully!'});
         }
     });
 
@@ -73,10 +73,11 @@ app.post('/send-message', (req, res) => {
 
 
 app.post('/api/send-order-to-email', (req, res) => {
-    const { formData} = req.body;
+    const {formData} = req.body;
 
     // Преобразуем formData в строку для отправки в теле письма
     const formDataText = `
+        Order ID: ${formData.order_id}
         Name: ${formData.name}
         Surname: ${formData.surname}
         Phone: ${formData.phone}
@@ -103,10 +104,10 @@ app.post('/api/send-order-to-email', (req, res) => {
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Failed to send email' });
+            return res.status(500).json({error: 'Failed to send email'});
         } else {
             console.log('Email sent: ' + info.response);
-            res.status(200).json({ message: 'Server: Message sent successfully!' });
+            res.status(200).json({message: 'Server: Message sent successfully!'});
         }
     });
 
@@ -114,11 +115,11 @@ app.post('/api/send-order-to-email', (req, res) => {
 
 
 app.post('/api/payment-result', (req, res) => {
-    const {data , signature} = req.body;
+    const {data, signature} = req.body;
 
-    console.log('Полученные данные от LiqPay:',  data);
+    console.log('Полученные данные от LiqPay:', data);
     const decodedData = JSON.parse(Buffer.from(data, 'base64').toString('utf-8'));
-    console.log('Раскодированные данные от LiqPay:',  decodedData);
+    console.log('Раскодированные данные от LiqPay:', decodedData);
 
 
     // Проверяем статус платежа
@@ -138,7 +139,7 @@ app.post('/api/payment-result', (req, res) => {
 
 // Эндпоинт для получения статуса
 app.get('/api/payment-status', (req, res) => {
-    res.json({ status: paymentStatus });
+    res.json({status: paymentStatus});
 });
 
 app.get('/', (req, res) => {
