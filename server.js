@@ -72,6 +72,29 @@ app.post('/send-message', (req, res) => {
 });
 
 
+app.post('/api/send-order-to-email', (req, res) => {
+    const { formData} = req.body;
+
+    const mailOptions = {
+        from: 'bravisabright@gmail.com',
+        to: 'bravisabright@gmail.com', // Адрес, на который придет письмо
+        subject: `New order MugMate`, // Тема письма
+        text: formData, // Тело письма
+    };
+
+    // Отправляем письмо
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).json({ error: 'Failed to send email' });
+        } else {
+            console.log('Email sent: ' + info.response);
+            res.status(200).json({ message: 'Server: Message sent successfully!' });
+        }
+    });
+
+});
+
 
 app.post('/api/payment-result', (req, res) => {
     const {data , signature} = req.body;
