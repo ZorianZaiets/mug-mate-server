@@ -75,11 +75,28 @@ app.post('/send-message', (req, res) => {
 app.post('/api/send-order-to-email', (req, res) => {
     const { formData} = req.body;
 
+    // Преобразуем formData в строку для отправки в теле письма
+    const formDataText = `
+        Name: ${formData.name}
+        Surname: ${formData.surname}
+        Phone: ${formData.phone}
+        Email: ${formData.email}
+        Address: ${formData.address}
+        City: ${formData.city}
+        Postcode: ${formData.postcode}
+        Company: ${formData.company}
+        Post Type: ${formData.post}
+        Payment: ${formData.payment}
+        Currency: ${formData.currency}
+        Sum to Pay: ${formData.sumtopay}
+        Cart Items: ${formData.cartitems.map(item => `${item.title} x ${item.quantity}`).join(', ')}
+    `;
+
     const mailOptions = {
         from: 'bravisabright@gmail.com',
         to: 'bravisabright@gmail.com', // Адрес, на который придет письмо
         subject: `New order MugMate`, // Тема письма
-        text: formData, // Тело письма
+        text: formDataText, // Тело письма
     };
 
     // Отправляем письмо
