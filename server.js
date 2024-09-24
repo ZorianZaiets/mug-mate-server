@@ -88,7 +88,7 @@ app.post('/api/payment-result', (req, res) => {
         paymentStatus = 'success'; // Обновляем статус
         console.log('Оплата успешна');
     } else {
-        paymentStatus = 'failed'; // Обновляем статус
+        paymentStatus = decodedData.status; // Обновляем статус
         console.log('Статус оплаты:', decodedData.status);
     }
 
